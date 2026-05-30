@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const uploadRoute = require("./routes/upload");
+
 const express = require("express");
 const cors = require("cors");
 
@@ -13,6 +15,8 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+app.use("/upload", uploadRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
