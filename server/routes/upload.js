@@ -2,6 +2,11 @@ const express = require("express");
 const multer = require("multer");
 
 const {
+  saveDocument,
+  saveChunk,
+} = require("../services/documentService");
+
+const {
   chunkText,
 } = require("../services/chunkService");
 
@@ -32,6 +37,18 @@ router.post(
 
       const chunks = chunkText(result.text);
 
+      const documentId =
+        await saveDocument(
+          req.file.originalname
+        );
+
+      for (const chunk of chunks) {
+      await saveChunk(
+        documentId,
+        chunk
+      );
+}
+
       res.json({
   message: "PDF processed successfully",
   pages: result.pages,
@@ -43,6 +60,8 @@ router.post(
 
       res.status(500).json({
         message: "Failed to process PDF",
+        error: error.message,
+        stack: error.stack
       });
     }
   }

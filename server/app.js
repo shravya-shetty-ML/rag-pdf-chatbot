@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const testDbRoute = require("./routes/testDb");
 const uploadRoute = require("./routes/upload");
 
 const express = require("express");
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.use("/upload", uploadRoute);
+app.use("/test-db", testDbRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
